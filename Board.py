@@ -52,18 +52,20 @@ class board_initial:
         Pos 1   2   3   4   5   6
         **********Human***********
         """
-        print('\n')
-        print("************AI*************")
-        print("Pos", end="")
-        print(*["%2d" % x for x in reversed([1, 2, 3, 4, 5, 6])], sep="  ")      # position from human perspective
-        print("AI:", end="")
+        print("******************AI*******************")
+        print("Position ", end="")
+        print(*["%2d" % x for x in reversed([1, 2, 3, 4, 5, 6])], sep="  ")      # position from AI perspective
+        print(' ')
+        print("AI:      ", end="")
         print(*["%2d" % x for x in reversed(self.board[1:7])], sep=" -")
-        print("%2d ——————— STORE ———————%2d" % (self.points(False), self.points(True)))     # Store
-        print("H: ", end="")
+        print("  %2d   ——————————— STORE ———————————  %2d  " % (self.points(False), self.points(True)))     # Store
+        print("Human:   ", end="")
         print(*["%2d" % x for x in self.board[8:]], sep=" -")
-        print("Pos", end="")
+        print("")
+        print("Position ", end="")
         print(*["%2d" % x for x in [1, 2, 3, 4, 5, 6]], sep="  ")    # position from AI's perspective
-        print("**********Human***********")
+        print("*****************Human******************")
+        print("")
 
     def Human_board(self):
         """
@@ -169,7 +171,7 @@ class board_initial:
             self.get_moves(i, [], move)
         return move
 
-    def minmax(self, depth=5, ai_max=True):
+    def minmax(self, depth=5, ai_max=False):
         """
         MiniMax function to calculate move value for every move.
         :param depth: search depth

@@ -25,14 +25,9 @@
 import sys
 
 
-def calculate_result(board, flag):
-    """
-    compute the finally score and show result
-    :param board: The last board
-    :param flag: True means
-    """
-    ai_score = board.points(not flag)
-    human_score = board.points(flag)
+def calculate_result(board):
+    ai_score = board.points(False)
+    human_score = board.points(True)
     print("AI score: {}".format(ai_score))
     print("Human score: {}".format(human_score))
     if ai_score > human_score:
@@ -47,7 +42,7 @@ def ai_move(board):
     move_flag = True
     while move_flag:
         if board.is_finish():
-            calculate_result(board, True)
+            calculate_result(board)
             print('Game ended')
             return 0
         try:
@@ -68,7 +63,7 @@ def human_move(board):
     move_flag = True
     while move_flag:
         if board.is_finish():
-            calculate_result(board, False)
+            calculate_result(board)
             print('Game ended')
             return 0
         pos = input("Human Move(q means exit the game): ").split()
