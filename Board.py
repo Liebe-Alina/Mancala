@@ -44,13 +44,15 @@ class board_initial:
         """
         Game Board show: P means position
         example for initial board
-        ************AI*************
-        Pos 6   5   4   3   2   1
-        AI: 4 - 4 - 4 - 4 - 4 - 4
-         0 ——————— STORE ——————— 0
-        H:  4 - 4 - 4 - 4 - 4 - 4
-        Pos 1   2   3   4   5   6
-        **********Human***********
+        ******************AI*******************
+        Position  6   5   4   3   2   1
+
+        AI:       4 - 4 - 4 - 4 - 4 - 4
+           0   ——————————— STORE ———————————   0
+        Human:    4 - 4 - 4 - 4 - 4 - 4
+
+        Position  1   2   3   4   5   6
+        *****************Human******************
         """
         print("******************AI*******************")
         print("Position ", end="")
