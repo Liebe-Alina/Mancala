@@ -44,26 +44,26 @@ class board_initial:
         """
         Game Board show: P means position
         example for initial board
-        **********Human***********
-        Pos 6   5   4   3   2   1
-        Op: 4 - 4 - 4 - 4 - 4 - 4
-         0 ——————— STORE ——————— 0
-        AI: 4 - 4 - 4 - 4 - 4 - 4
-        Pos 1   2   3   4   5   6
         ************AI*************
+        Pos 6   5   4   3   2   1
+        AI: 4 - 4 - 4 - 4 - 4 - 4
+         0 ——————— STORE ——————— 0
+        H:  4 - 4 - 4 - 4 - 4 - 4
+        Pos 1   2   3   4   5   6
+        **********Human***********
         """
         print('\n')
-        print("**********Human***********")
+        print("************AI*************")
         print("Pos", end="")
         print(*["%2d" % x for x in reversed([1, 2, 3, 4, 5, 6])], sep="  ")      # position from human perspective
-        print("Op:", end="")
-        print(*["%2d" % x for x in reversed(self.board[8:])], sep=" -")
-        print("%2d ——————— STORE ———————%2d" % (self.points(True), self.points(False)))     # human's hole
         print("AI:", end="")
-        print(*["%2d" % x for x in self.board[1:7]], sep=" -")       # AI's hole
+        print(*["%2d" % x for x in reversed(self.board[1:7])], sep=" -")
+        print("%2d ——————— STORE ———————%2d" % (self.points(False), self.points(True)))     # Store
+        print("H: ", end="")
+        print(*["%2d" % x for x in self.board[8:]], sep=" -")
         print("Pos", end="")
         print(*["%2d" % x for x in [1, 2, 3, 4, 5, 6]], sep="  ")    # position from AI's perspective
-        print("************AI*************")
+        print("**********Human***********")
 
     def Human_board(self):
         """
@@ -99,17 +99,23 @@ class board_initial:
                 return self.board[7]
         else:
             if self.is_finish():
-                return self.board[7] + sum(self.board[8:])
+                return self.board[0] + sum(self.board[8:])
             else:
                 return self.board[0]
+
+    def score(self):
+        if not self.reversed:
+            return self.points(False) - self.points(True)       # Calculate AI score
+        else:
+            return self.points(True) - self.points(False)       # calculate Human score
 
     def yield_all_positions(self):
         """
         Get all the position AI can choose
         :return: the yield generator for positions
         """
-        for pos, chess in enumerate(self.board[1:7]):
-            if chess > 0:
+        for pos, stones in enumerate(self.board[1:7]):
+            if stones > 0:
                 yield pos
 
     def move(self, position):
@@ -120,12 +126,12 @@ class board_initial:
         """
         assert position < 6, "Wrong Position you choose"
         position += 1
-        chess = self.board[position]
-        assert chess > 0, "Wrong number of chess"
+        stones = self.board[position]
+        assert stones > 0, "Wrong number of stone"
         self.board[position] = 0
-        while chess:
+        while stones:
             position += 1
-            chess -= 1
+            stones -= 1
             if position >= len(self.board):
                 position = 1
             self.board[position] += 1
@@ -141,7 +147,7 @@ class board_initial:
 
     def get_moves(self, pos, moves_list, moves):
         """
-        get all the move
+        get all the positions can be chosen.
         :return: list to show all the moves
         """
         updated_board = board_initial(self)
@@ -163,15 +169,9 @@ class board_initial:
             self.get_moves(i, [], move)
         return move
 
-    def score(self):
-        if not self.reversed:
-            return self.points(False) - self.points(True)       # Calculate AI score
-        else:
-            return self.points(True) - self.points(False)       # calculate Opponent score
-
     def minmax(self, depth=5, ai_max=True):
         """
-        Min-Max function to calculate move value for every move.
+        MiniMax function to calculate move value for every move.
         :param depth: search depth
         :param ai_max: setting for if the regard AI as the max value
         :return: best value for one move
@@ -199,7 +199,7 @@ class board_initial:
         example: ([positions], value)
         """
         move_sequence, board = x
-        return [x + 1 for x in move_sequence], board.minmax()
+        return list(set([x + 1 for x in move_sequence])), board.minmax()
 
     def find_best(self):
         """
