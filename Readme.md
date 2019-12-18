@@ -21,5 +21,5 @@ This is the begin text, 0 means human first and AI second, 1 means AI first and 
 
 - Human Move(q means exit the game):
 
-This is the command which shows you to choose a position to move. if it is not a valid position following rule, console will show that rong Move 9, Please Try Again (1-6)  
+This is the command which shows you to choose a position to move. if it is not a valid position following rule, console will show that Wrong Move, Please Try Again (1-6)  
 
