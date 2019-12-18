@@ -25,6 +25,7 @@
 
 from Board import board_initial
 from Modules import ai_move, human_move
+import sys
 
 
 def run(ai_start):
